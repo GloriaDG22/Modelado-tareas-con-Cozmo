@@ -1,5 +1,6 @@
 import pyttsx3
 import pycozmo
+import time
 
 '''
 1. Arriba
@@ -10,15 +11,34 @@ import pycozmo
 '''
 
 origen = 1
-destino = 2
-n_veces = 4
+destino = 4
+n_veces = 3
 
 def moverBrazos (origen, destino, n_veces):    
-    with pycozmo.connect(enable_procedural_face=False) as cli:
+    with pycozmo.connect() as cli:
+        trayecto = [origen, destino]
+        pos = 0
         
-        cli.set_lift_height(pycozmo.robot.MAX_LIFT_HEIGHT)
-        
-        #pycozmo.robot.LiftPosition(origen)
-        cli.move_lift(100)
+        #Necesita esperar unos segundos para realizar los primeros movimientos
+        time.sleep(5) 
+        for i in range(n_veces):
+
+            for mov in trayecto:
+                print("movimiento: " + str(mov))
+                if mov == 1:
+                    cli.set_lift_height(pycozmo.MAX_LIFT_HEIGHT.mm) #92mm
+                    time.sleep(1)
+                elif mov == 2:
+                    cli.set_lift_height(75.00) #75mm
+                    time.sleep(1)
+                elif mov == 3:
+                    cli.set_lift_height(pycozmo.MIN_LIFT_HEIGHT.mm*2) #64mm
+                    time.sleep(1)
+                elif mov == 4:
+                    cli.set_lift_height(pycozmo.LIFT_PIVOT_HEIGHT.mm) #45mm
+                    time.sleep(1)
+                elif mov == 5:
+                    cli.set_lift_height(pycozmo.MIN_LIFT_HEIGHT.mm) #32mm
+                    time.sleep(1)
 
 moverBrazos(origen, destino, n_veces)
