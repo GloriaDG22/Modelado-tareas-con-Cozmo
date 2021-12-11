@@ -1,4 +1,3 @@
-import pyttsx3
 import pycozmo
 import time
 
@@ -17,14 +16,14 @@ n_veces = 3
 def moverBrazos (origen, destino, n_veces):    
     with pycozmo.connect() as cli:
         trayecto = [origen, destino]
-        pos = 0
         
+        
+        cli.wait_for_robot() # se puede sustituir por la siguiente linea??????????
         #Necesita esperar unos segundos para realizar los primeros movimientos
-        time.sleep(5) 
+        #time.sleep(5) 
         for i in range(n_veces):
 
             for mov in trayecto:
-                print("movimiento: " + str(mov))
                 if mov == 1:
                     cli.set_lift_height(pycozmo.MAX_LIFT_HEIGHT.mm) #92mm
                     time.sleep(1)
